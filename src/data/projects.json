@@ -1,0 +1,50 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "Title": "Sun Tracking Solar Panel",
+      "Description": "Developed a Python-based solar panel tracking system using LDR sensors and servo motors, improving energy efficiency by 25%",
+      "Img": "../assets/prj1.png",
+      "Link": "https://github.com/yourusername/portfolio",
+      "TechStack": ["Python", "LDR Sensors", "Servo Motors"],
+      "Features": ["Energy Maximization", "Auto Alignment", "Smart Tracking","Dynamic Orientation"]
+    },
+    {
+      "id": "2",
+      "Title": "Design and Analysis of a Terahertz Antenna",
+      "Description": "A 2.8 THz metamaterial antenna was simulated for bio-sensing, revealing Germanium as the optimal substrate to evaluate return loss",
+      "Img": "../assets/prj2.jpg",
+      "Link": "https://github.com/yourusername/ecommerce",
+      "TechStack": ["Ansys Hfss"],
+      "Features": ["Ultra-Sensitive Detection", "High-Frequency Operation", "Compact Antenna Design","Bio-Compatible Interface","Real-Time Monitoring"]
+    },
+    {
+      "id": "3",
+      "Title": "Convert Black and White image to colour image",
+      "Description": "Convert a grayscale image to color by using KNN to predict pixel colors based on nearby color image patches. Use OpenCV",
+      "Img": "../assets/prj3.jpg",
+      "Link": "https://github.com/yourusername/taskapp",
+      "TechStack": ["Python", "Pandas", "OpenCV", "KNN", "Numpy"],
+      "Features": ["Historical Engagement", "Emotional Impact", "Detail Recognition","Cultural Connection","Real-Time Feedback","Cinematic Quality"]
+    },
+    {
+      "id": "4",
+      "Title": "Self-Activating Weather Control Fan",
+      "Description": "Reduced temperature control latency by 20% using DHT11 and Embedded C",
+      "Img": "../assets/prj4.webp",
+      "Link": "https://github.com/yourusername/weather",
+      "TechStack": ["Embedded C", "DHT11", "Arduino", "Motor Driver", "Display"],
+      "Features": ["Enhanced Airflow", "Eco-Friendly Operation", "Climate Adaptation","Energy Efficiency","User Comfort"  ]
+    },
+    {
+      "id": "5",
+      "Title": "Portfolio",
+      "Description": "A responsive portfolio using HTML, CSS, JavaScript, and React to showcase projects, skills, and experience with interactive UI components",
+      "Img": "../assets/prj5.png",
+      "Link": "https://github.com/yourusername/weather",
+      "TechStack": ["HTML", "CSS", "JavaScript", "React"],
+      "Features": ["Responsive Design", "Interactive UI", "Project Showcase","Skill Highlighting","Experience Display","Real-Time Feedback"]
+    }
+
+  ]
+}
