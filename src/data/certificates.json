@@ -2,31 +2,31 @@
   "certificates": [
     {
       "id": 1,
-      "ImgSertif": "../assets/crt3.png"
+      "ImgSertif": "/assets/certificate_images/crt3.png"
     },
     {
       "id": 2,
-      "ImgSertif": "../assets/crt7.png"
+      "ImgSertif": "/assets/certificate_images/crt7.png"
     },
     {
       "id": 3,
-      "ImgSertif": "../assets/crt5.png"
+      "ImgSertif": "/assets/certificate_images/crt5.png"
     },
     {
       "id": 4,
-      "ImgSertif": "../assets/crt1.png"
+      "ImgSertif": "/assets/certificate_images/crt1.png"
     },
     {
       "id": 5,
-      "ImgSertif": "../assets/crt2.png"
+      "ImgSertif": "/assets/certificate_images/crt2.png"
     },
     {
       "id": 6,
-      "ImgSertif": "../assets/crt4.png"
+      "ImgSertif": "/assets/certificate_images/crt4.png"
     },
     {
       "id":7,
-      "ImgSertif": "../assets/crt6.jpg"
+      "ImgSertif": "/assets/certificate_images/crt6.jpg"
     }
   ]
 }

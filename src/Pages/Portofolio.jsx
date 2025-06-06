@@ -15,6 +15,8 @@ import Certificate from "../components/Certificate";
 import { Code, Award, Boxes } from "lucide-react";
 import certificatesData from "../data/certificates.json";
 import projectsData from "../data/projects.json";
+// Debug: Log the imported projects data
+console.log('Imported projectsData:', JSON.stringify(projectsData, null, 2));
 
 
 // Separate ShowMore/ShowLess button component
@@ -102,26 +104,53 @@ function a11yProps(index) {
 }
 
 const techStacks = [
+  { icon: "/assets/svg/c.svg", language: "C" },
+  { icon: "/assets/svg/c++.svg", language: "C++" },
+  { icon: "/assets/svg/python.svg", language: "Python" },
+  { icon: "/assets/svg/java.svg", language: "Java" },
+  { icon: "/assets/svg/sql.svg", language: "MY SQL" },
+  { icon: "/assets/svg/excel.svg", language: "Excel" },
+  { icon: "/assets/svg/powerbi.svg", language: "Power BI" },
+  { icon: "/assets/svg/tableau.svg", language: "Tableau" },
+  { icon: "/assets/svg/html.svg", language: "HTML" },
+  { icon: "/assets/svg/css.svg", language: "CSS" },
+  { icon: "/assets/svg/javascript.svg", language: "JavaScript" },
+  { icon: "/assets/svg/reactjs.svg", language: "React" },
+  { icon: "/assets/svg/nodejs.svg", language: "Node.js" },
+  { icon: "/assets/svg/firebase.svg", language: "Firebase" },
+  { icon: "/assets/svg/git-svgrepo-com.svg", language: "Git" },
+  { icon: "/assets/svg/github-color-svgrepo-com.svg", language: "GitHub" },
+
   
-  { icon: "c.svg", language: "C" },
-  { icon: "c++.svg", language: "C++" },
-  { icon: "python.svg", language: "Python" },
-  { icon: "sql.svg", language: "MY SQL" },
-  { icon: "excel.svg", language: "Excel" },
-  { icon: "powerbi.svg", language: "Power BI" },
-  { icon: "tableau.svg", language: "Tableau" },
-  { icon: "html.svg", language: "HTML" },
-  { icon: "css.svg", language: "CSS" },
-  { icon: "java.svg", language: "Java" },
-  
-  // { icon: "vercel.svg", language: "Vercel" },
-  // { icon: "SweetAlert.svg", language: "SweetAlert2" },
+  // { icon: "/assets/svg/vercel.svg", language: "Vercel" },
+  // { icon: "/assets/svg/SweetAlert.svg", language: "SweetAlert2" },
 ];
 
 export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
-  const [projects, setProjects] = useState(projectsData.projects);
+  const [projects, setProjects] = useState([]);
+  
+  useEffect(() => {
+    console.log('Initial projectsData:', projectsData);
+    if (projectsData && projectsData.projects) {
+      // Log each project with its ID
+      projectsData.projects.forEach((proj, idx) => {
+        console.log(`Project ${idx}:`, { id: proj.id, title: proj.Title, hasId: !!proj.id });
+      });
+      
+      // Ensure all projects have IDs
+      const projectsWithIds = projectsData.projects.map((proj, idx) => ({
+        ...proj,
+        id: proj.id || `project-${idx}` // Ensure every project has an ID
+      }));
+      
+      console.log('Projects with IDs:', projectsWithIds);
+      setProjects(projectsWithIds);
+    } else {
+      console.error('No projects data found in projectsData:', projectsData);
+    }
+  }, []);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
   const isMobile = window.innerWidth < 768;
@@ -269,21 +298,24 @@ export default function FullWidthTabs() {
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
-                {displayedProjects.map((project, index) => (
-                  <div
-                    key={project.id || index}
-                    data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
-                    data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
-                  >
-                    <CardProject
-                      Img={project.Img}
-                      Title={project.Title}
-                      Description={project.Description}
-                      Link={project.Link}
-                      id={project.id}
-                    />
-                  </div>
-                ))}
+                {displayedProjects && displayedProjects.map((project, index) => {
+                  console.log('Rendering project:', { index, id: project.id, hasId: !!project.id });
+                  return (
+                    <div
+                      key={project.id || index}
+                      data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
+                      data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
+                    >
+                      <CardProject
+                        Img={project.Img}
+                        Title={project.Title}
+                        Description={project.Description}
+                        Link={project.Link}
+                        id={project.id?.toString()} // Ensure ID is a string
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
             {projects.length > initialItems && (

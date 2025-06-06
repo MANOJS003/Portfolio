@@ -5,10 +5,13 @@ import { ExternalLink, ArrowRight } from 'lucide-react';
 const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
   const handleDetails = (e) => {
     if (!id) {
-      console.log("ID kosong");
+      console.log("Project ID is missing");
       e.preventDefault();
       alert("Project details are not available");
+      return false;
     }
+    // Allow the link to proceed if ID exists
+    return true;
   };
   
 
