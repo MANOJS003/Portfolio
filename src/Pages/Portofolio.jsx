@@ -82,8 +82,8 @@ function TabPanel({ children, value, index, ...other }) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: { xs: 1, sm: 3 } }}>
-          <Typography>{children}</Typography>
+        <Box sx={{ p: { xs: 1, sm: 3 } }} component="section">
+          {children}
         </Box>
       )}
     </div>
@@ -293,7 +293,17 @@ export default function FullWidthTabs() {
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
-          onChangeIndex={setValue}
+          onChangeIndex={(index) => setValue(index)}
+          enableMouseEvents
+          resistance
+          slideStyle={{
+            padding: '0 10px',
+            boxSizing: 'border-box',
+            overflow: 'visible'
+          }}
+          containerStyle={{
+            transition: 'transform 0.5s cubic-bezier(0.15, 0.4, 0.6, 0.85)'
+          }}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
@@ -312,6 +322,8 @@ export default function FullWidthTabs() {
                         Description={project.Description}
                         Link={project.Link}
                         id={project.id?.toString()} // Ensure ID is a string
+                        isEighthProject={project.id === 8 || project.id === "8"} // Show Live Demo button only for the 8th project
+                        LiveDemo={project.LiveDemo} // Pass the LiveDemo URL
                       />
                     </div>
                   );

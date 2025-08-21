@@ -4,7 +4,8 @@ import {
   Github,
   Instagram,
   Youtube,
-  ExternalLink
+  ExternalLink,
+  Code2
 } from "lucide-react";
 import { Telegram } from "@mui/icons-material";
 
@@ -47,11 +48,20 @@ const socialLinks = [
     gradient: "from-[#333] to-[#24292e]"
   },
   {
+    name: "LeetCode",
+    displayName: "LeetCode",
+    subText: "@Manoj_S115",
+    icon: Code2,
+    url: "https://leetcode.com/u/Manoj_S115/",
+    color: "#FFA116",
+    gradient: "from-[#FFA116] to-[#B2A98F]"
+  },
+  {
     name: "Telegram",
     displayName: "Telegram",
     subText: "@Manoj",
     icon: Telegram,
-    url: "https://t.me/manoj_shenbagaraj",
+    url: "https://leetcode.com/u/Manoj_S115/",
     color: "#44a4e3",
     gradient: "from-[#000000] via-[#25F4EE] to-[#FE2C55]"
   }

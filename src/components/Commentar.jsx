@@ -85,7 +85,7 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
                 <input
                     type="text"
                     value={userName}
-                    onChange={(e) => setUserName(e.target.value)}z
+                    onChange={(e) => setUserName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
                     required
@@ -300,22 +300,24 @@ const Komentar = () => {
                 )}
             </div>
         </div>
-        <style jsx>{`
+        <style dangerouslySetInnerHTML={{
+          __html: `
             .custom-scrollbar::-webkit-scrollbar {
-                width: 6px;
+              width: 6px;
             }
             .custom-scrollbar::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 6px;
+              background: rgba(255, 255, 255, 0.05);
+              border-radius: 6px;
             }
             .custom-scrollbar::-webkit-scrollbar-thumb {
-                background: rgba(99, 102, 241, 0.5);
-                border-radius: 6px;
+              background: rgba(99, 102, 241, 0.5);
+              border-radius: 6px;
             }
             .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background: rgba(99, 102, 241, 0.7);
+              background: rgba(99, 102, 241, 0.7);
             }
-        `}</style>
+          `
+        }} />
     </div>
     );
 };

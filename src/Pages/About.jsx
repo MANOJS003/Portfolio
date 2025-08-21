@@ -40,27 +40,48 @@ const Header = memo(() => (
 const ProfileImage = memo(() => (
   <div className="flex justify-end items-center sm:p-12 sm:py-0 sm:pb-0 p-0 py-2 pb-2">
     <div className="relative group" data-aos="fade-up" data-aos-duration="1000">
-      {/* Optimized gradient backgrounds with reduced complexity for mobile */}
+      {/* Gradient backgrounds */}
       <div className="absolute -inset-6 opacity-[25%] z-0 hidden sm:block">
         <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-indigo-500 to-purple-600 rounded-full blur-2xl animate-spin-slower" />
         <div className="absolute inset-0 bg-gradient-to-l from-fuchsia-500 via-rose-500 to-pink-600 rounded-full blur-2xl animate-pulse-slow opacity-50" />
         <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-cyan-500 to-teal-400 rounded-full blur-2xl animate-float opacity-50" />
       </div>
+      
       <div className="relative">
         <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full overflow-hidden shadow-[0_0_40px_rgba(120,119,198,0.3)] transform transition-all duration-700 group-hover:scale-105">
-          <div className="absolute inset-0 border-4 border-white/20 rounded-full z-20 transition-all duration-700 group-hover:border-white/40 group-hover:scale-105" />
+          <div className="absolute inset-0 border-4 border-white/20 rounded-full z-30 transition-all duration-700 group-hover:border-white/40 group-hover:scale-105" />
 
-          {/* Optimized overlay effects - disabled on mobile */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 transition-opacity duration-700 group-hover:opacity-0 hidden sm:block" />
+          {/* First Image (Visible by default) */}
+          <div className="relative w-full h-full transition-all duration-1000 ease-in-out group-hover:opacity-0">
+            <img
+              src="/profile.png"
+              alt="Profile"
+              className="w-full h-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                console.error('Failed to load profile image:', e.target.src);
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
+
+          {/* Second Image (Shown on hover) */}
+          <div className="absolute inset-0 opacity-0 transition-all duration-1000 ease-in-out group-hover:opacity-100">
+            <img
+              src="/11.jpg"
+              alt="Profile Hover"
+              className="w-full h-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                console.error('Failed to load hover image:', e.target.src);
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
+
+          {/* Overlay effects */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 opacity-100 group-hover:opacity-0 transition-opacity duration-700 hidden sm:block" />
           <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-transparent to-blue-500/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block" />
-
-          <img
-            src="\11.jpg"
-            alt="Profile" 
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
-            loading="lazy"
-            
-          />
 
           {/* Advanced hover effects - desktop only */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 hidden sm:block">
@@ -277,31 +298,20 @@ const AboutPage = () => {
         </a>
       </div>
 
-      <style jsx>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
           }
-          50% {
-            transform: translateY(-20px);
+          @keyframes spin-slower {
+            to { transform: rotate(360deg); }
           }
-        }
-        @keyframes spin-slower {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        .animate-bounce-slow {
-          animation: bounce 3s infinite;
-        }
-        .animate-pulse-slow {
-          animation: pulse 3s infinite;
-        }
-        .animate-spin-slower {
-          animation: spin-slower 8s linear infinite;
-        }
-      `}</style>
+          .animate-bounce-slow { animation: bounce 3s infinite; }
+          .animate-pulse-slow { animation: pulse 3s infinite; }
+          .animate-spin-slower { animation: spin-slower 8s linear infinite; }
+        `
+      }} />
     </div>
   );
 };

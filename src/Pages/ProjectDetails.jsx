@@ -117,7 +117,9 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const selectedProject = projectsData.projects.find((p) => String(p.id) === id);
+    // Access the projects array from the imported data
+    const projectsList = projectsData.projects || [];
+    const selectedProject = projectsList.find((p) => String(p.id) === id);
     
     if (selectedProject) {
       const enhancedProject = {
@@ -125,9 +127,17 @@ const ProjectDetails = () => {
         Features: selectedProject.Features || [],
         TechStack: selectedProject.TechStack || [],
         Github: selectedProject.Link || 'Private',
-        LiveDemo: selectedProject.Link || 'Private'
+        LiveDemo: selectedProject.LiveDemo || 'Private'
       };
+      console.log('Found project:', enhancedProject);
       setProject(enhancedProject);
+    } else {
+      console.log('Project not found for ID:', id);
+      // If project not found, navigate back after a short delay
+      const timer = setTimeout(() => {
+        navigate('/portfolio');
+      }, 1500);
+      return () => clearTimeout(timer);
     }
   }, [id]);
 
@@ -276,68 +286,70 @@ const ProjectDetails = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
+      <style>
+        {`
+          @keyframes blob {
+            0% {
+              transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+              transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+              transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+              transform: translate(0px, 0px) scale(1);
+            }
           }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
+          .animate-blob {
+            animation: blob 10s infinite;
           }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
+          .animation-delay-2000 {
+            animation-delay: 2s;
           }
-          100% {
-            transform: translate(0px, 0px) scale(1);
+          .animation-delay-4000 {
+            animation-delay: 4s;
           }
-        }
-        .animate-blob {
-          animation: blob 10s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.7s ease-out;
-        }
-        .animate-slideInLeft {
-          animation: slideInLeft 0.7s ease-out;
-        }
-        .animate-slideInRight {
-          animation: slideInRight 0.7s ease-out;
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
+          .animate-fadeIn {
+            animation: fadeIn 0.7s ease-out;
           }
-          to {
-            opacity: 1;
+          .animate-slideInLeft {
+            animation: slideInLeft 0.7s ease-out;
           }
-        }
-        @keyframes slideInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-30px);
+          .animate-slideInRight {
+            animation: slideInRight 0.7s ease-out;
           }
-          to {
-            opacity: 1;
-            transform: translateX(0);
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
           }
-        }
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(30px);
+          @keyframes slideInLeft {
+            from {
+              opacity: 0;
+              transform: translateX(-30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
           }
-          to {
-            opacity: 1;
-            transform: translateX(0);
+          @keyframes slideInRight {
+            from {
+              opacity: 0;
+              transform: translateX(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
           }
-        }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };

@@ -53,7 +53,28 @@
       "Link": "https://github.com/MANOJS003/Stock-Market-Analyzer",
       "TechStack": ["TypeScript", "React", "Chart.js", "API Integration", "Data Visualization"],
       "Features": ["Real-Time Updates", "Historical Data", "Technical Indicators","Customizable Views","Performance Analysis","User-Friendly Interface"]
+    },
+    {
+      
+        "id": "7",
+        "Title": "Form Validator",
+        "Description": "Created a responsive form validator using React to perform real-time validation and enhance user input accuracy.",
+        "Img": "/assets/project_images/prj7.jpg",
+        "Link": "https://github.com/MANOJS003/Form-Validation",
+        "TechStack": ["HTML", "CSS", "JavaScript", "React"],
+        "Features": ["Real-Time Validation", "Custom Error Messages", "Reusable Components", "Field-Level Validation", "Responsive Design", "User-Friendly Interface"]
+      
+    },
+    {
+      "id": "8",
+      "Title": "Portfolio Website",
+      "Description": "Designed and developed a personal portfolio website using React for my friend to showcase their projects, skills, and contact details with a modern and responsive user interface.",
+      "Img": "/assets/project_images/prj8.png",
+      "Link": "https://github.com/MANOJS003/Portfolio-For-Friend",
+      "LiveDemo": "https://jothiprema.web.app/",
+      "TechStack": ["HTML", "CSS", "JavaScript", "React"],
+      "Features": ["Responsive Design", "Project Showcase", "Smooth Navigation", "Contact Form", "Theme Toggle", "Interactive UI"]
     }
-
+    
   ]
 }

@@ -19,18 +19,26 @@ const AnimatedBackground = () => {
 			currentScroll = newScroll
 
 			blobRefs.current.forEach((blob, index) => {
-				const initialPos = initialPositions[index]
+				if (!blob) return; // Skip if the ref is null/undefined
+
+				const initialPos = initialPositions[index] || { x: 0, y: 0 };
 
 				// Calculating movement in both X and Y direction
-				const xOffset = Math.sin(newScroll / 100 + index * 0.5) * 340 // Horizontal movement
-				const yOffset = Math.cos(newScroll / 100 + index * 0.5) * 40 // Vertical movement
+				const xOffset = Math.sin(newScroll / 100 + index * 0.5) * 340; // Horizontal movement
+				const yOffset = Math.cos(newScroll / 100 + index * 0.5) * 40; // Vertical movement
 
-				const x = initialPos.x + xOffset
-				const y = initialPos.y + yOffset
+				const x = initialPos.x + xOffset;
+				const y = initialPos.y + yOffset;
 
-				// Apply transformation with smooth transition
-				blob.style.transform = `translate(${x}px, ${y}px)`
-				blob.style.transition = "transform 1.4s ease-out"
+				try {
+					// Safely apply transformation with smooth transition
+					if (blob.style) {
+						blob.style.transform = `translate(${x}px, ${y}px)`;
+						blob.style.transition = "transform 1.4s ease-out";
+					}
+				} catch (error) {
+					console.error('Error updating blob style:', error);
+				}
 			})
 
 			requestId = requestAnimationFrame(handleScroll)

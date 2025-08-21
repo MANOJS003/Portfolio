@@ -18,14 +18,26 @@
     },
     {
       "id": 5,
-      "ImgSertif": "/assets/certificate_images/crt2.png"
+      "ImgSertif": "/assets/certificate_images/crt10.png"
     },
     {
       "id": 6,
       "ImgSertif": "/assets/certificate_images/crt4.png"
     },
     {
-      "id":7,
+      "id": 7,
+      "ImgSertif": "/assets/certificate_images/crt8.png"
+    },
+    {
+      "id": 8,
+      "ImgSertif": "/assets/certificate_images/crt9.png"
+    },
+    {
+      "id": 9,
+      "ImgSertif": "/assets/certificate_images/crt2.png"
+    },
+    {
+      "id": 10,
       "ImgSertif": "/assets/certificate_images/crt6.jpg"
     }
   ]
