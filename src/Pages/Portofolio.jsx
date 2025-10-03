@@ -104,24 +104,19 @@ function a11yProps(index) {
 }
 
 const techStacks = [
-  { icon: "/assets/svg/c.svg", language: "C" },
-  { icon: "/assets/svg/c++.svg", language: "C++" },
+ 
   { icon: "/assets/svg/python.svg", language: "Python" },
-  { icon: "/assets/svg/java.svg", language: "Java" },
-  { icon: "/assets/svg/sql.svg", language: "MY SQL" },
-  { icon: "/assets/svg/excel.svg", language: "Excel" },
-  { icon: "/assets/svg/powerbi.svg", language: "Power BI" },
-  { icon: "/assets/svg/tableau.svg", language: "Tableau" },
+  {icon: "/assets/svg/django.svg", language: "Django"},
   { icon: "/assets/svg/html.svg", language: "HTML" },
   { icon: "/assets/svg/css.svg", language: "CSS" },
-  { icon: "/assets/svg/javascript.svg", language: "JavaScript" },
-  { icon: "/assets/svg/reactjs.svg", language: "React" },
-  { icon: "/assets/svg/nodejs.svg", language: "Node.js" },
+  { icon: "/assets/svg/bootstrap.png", language: "Bootstrap" },
+  { icon: "/assets/svg/js.svg", language: "JavaScript" },
+  { icon: "/assets/svg/sql.svg", language: "MY SQL" },
+  {icon: "/assets/svg/mongodb.svg", language: "Mangodb"},
   { icon: "/assets/svg/firebase.svg", language: "Firebase" },
   { icon: "/assets/svg/git-svgrepo-com.svg", language: "Git" },
   { icon: "/assets/svg/github-color-svgrepo-com.svg", language: "GitHub" },
 
-  
   // { icon: "/assets/svg/vercel.svg", language: "Vercel" },
   // { icon: "/assets/svg/SweetAlert.svg", language: "SweetAlert2" },
 ];

@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MANOJ S — Resume</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+    :root {
+      --accent: #3b82f6;
+      --accent-dark: #2563eb;
+      --muted: #6b7280;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --highlight: #f1f5f9;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    
+    .header {
+      display: flex;
+      gap: 24px;
+      padding: 2.5rem 3rem;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+    
+    .name {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+    }
+    
+    .contact {
+      margin-left: auto;
+      text-align: right;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+    
+    .contact a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    .contact a:hover {
+      color: var(--accent-dark);
+      text-decoration: underline;
+    }
+    
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2.5rem;
+      padding: 2.5rem 3rem;
+    }
+    
+    .section {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 1.25rem 0;
+      color: var(--text);
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+    
+    p.small {
+      margin: 0.5rem 0 0;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: var(--accent-dark);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0.5rem 0 1rem 0;
+    }
+    
+    ul li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    ul li:before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    
+    ul ul {
+      margin-left: 0;
+    }
+    
+    ul ul li:before {
+      content: none;
+    }
+    
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    
+    .skill {
+      background: #f1f5f9;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--text);
+      transition: all 0.2s ease;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .skill:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .projects .proj {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px dashed var(--border);
+    }
+    
+    .projects .proj:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .projects .proj h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    
+    .right-col {
+      background: #f8fafc;
+      padding: 1.75rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      height: fit-content;
+    }
+    
+    .edu-item {
+      margin-bottom: 1.25rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+    
+    .edu-item:before {
+      content: '🎓';
+      position: absolute;
+      left: 0;
+      top: 0.1rem;
+    }
+    
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    
+    .cert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 0.8rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    
+    .cert-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-color: var(--accent);
+    }
+    
+    .cert-icon {
+      font-size: 1.2rem;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+      width: 1.5rem;
+      text-align: center;
+      color: var(--accent);
+      background: #e0f2fe;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    
+    .cert-details {
+      flex: 1;
+    }
+    
+    .cert-name {
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.1rem;
+      line-height: 1.3;
+    }
+    
+    .cert-org {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    
+    .edu-item strong, .cert-item strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+    
+    .footer {
+      padding: 1.5rem 3rem;
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(248, 250, 252, 0.6) 100%);
+      text-align: center;
+    }
+    
+    a.link {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      font-weight: 500;
+    }
+    
+    a.link:hover {
+      color: var(--accent-dark);
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 880px) {
+      .main {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+      }
+      
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+      
+      .contact {
+        text-align: center;
+        margin: 1rem 0 0;
+      }
+      
+      .right-col {
+        margin-top: 1.5rem;
+      }
+      
+      .footer {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div>
+        <div class="name">MANOJ S</div>
+        <div class="small" style="margin-top:6px;color:var(--muted)">Seeking a challenging role in the tech industry to apply problem-solving and programming skills. Passionate about efficient software solutions and full-stack technologies.</div>
+      </div>
+      <div class="contact">
+        <div>manojamutha1000@gmail.com • 8778313763</div>
+        <div style="margin-top:6px">
+          Chinnakkamanpatti, Virudhunagar - 626203
+        </div>
+        <div style="margin-top:8px">
+          <a class="link" href="https://manojshenbagaraj.web.app" target="_blank">Portfolio</a> • <a class="link" href="https://www.linkedin.com/in/manoj-shenbagaraj" target="_blank">LinkedIn</a> • <a class="link" href="https://github.com/MANOJS003" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="main">
+      <section>
+        <div class="section">
+          <h2>Education</h2>
+          <div class="edu-item">
+            <strong>M.Kumarasamy College of Engineering — B.E, Electronics & Communication Engineering</strong>
+            <div class="small">2022 – 2026 | CGPA: 7.956</div>
+          </div>
+          <div class="edu-item">
+            <strong>Government Higher Secondary School — Higher Secondary Certificate</strong>
+            <div class="small">2021 – 2022</div>
+          </div>
+          <div class="edu-item">
+            <strong>SHN Edward Higher Secondary School — Secondary School Leaving Certificate (SSLC)</strong>
+            <div class="small">2019 – 2020</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Technical Skills & Tools</h2>
+          <div class="skills">
+            <span class="skill">Python (Intermediate)</span>
+            <span class="skill">MySQL (Intermediate)</span>
+            <span class="skill">HTML & CSS (Basics)</span>
+            <span class="skill">Java (Basic)</span>
+            <span class="skill">Git & GitHub</span>
+            <span class="skill">VS Code</span>
+            <span class="skill">Firebase</span>
+            <span class="skill">PhpMyAdmin</span>
+          </div>
+        </div>
+
+        <div class="section achievements">
+          <h2>Achievements</h2>
+          <ul>
+            <li>Solved 600+ problems on LeetCode, improving expertise in data structures, algorithms, and problem-solving.</li>
+            <li>Presented paper "Design and Analysis of Terahertz Antenna for Advanced and Precise Next-Generation Biomedical Sensing Applications" at an IEEE conference (May 9, 2025).</li>
+            <li>Math Club Coordinator — organized weekly math events for 3 years, developing leadership and event-management skills.</li>
+          </ul>
+        </div>
+
+        <div class="section projects">
+          <h2>Projects</h2>
+
+          <div class="proj">
+            <h3>Image Colorization and Object Description using Machine Learning and Wikipedia API (2023 - 2024)</h3>
+            <div class="small"><strong>Technologies:</strong> Python, OpenCV, KNN, Wikipedia API, Git, GitHub</div>
+            <p class="small">Built a tool that converts black-and-white images to color and predicts objects using KNN. After prediction, fetched short descriptions from Wikipedia via REST API. Used OpenCV for image handling and GitHub for version control.</p>
+          </div>
+
+          <div class="proj">
+            <h3>Stock Market Analyzer (Extracurricular project)</h3>
+            <div class="small"><strong>Technologies:</strong> Python, Pandas, NumPy, Matplotlib, Git, GitHub</div>
+            <p class="small">Built a stock market analysis tool to process historical price data with date-wise analysis. Utilized Pandas and NumPy for data handling and trend calculations, and Matplotlib for visualizing stock movements over time. Managed version control using GitHub.</p>
+          </div>
+
+          <div class="proj">
+            <h3>Design and Analysis of a Terahertz Antenna for Next-Generation Biosensing Applications (2024 - 2025)</h3>
+            <div class="small"><strong>Technologies:</strong> HFSS / CST, Terahertz Frequency Modeling, Antenna Design, EM Simulation</div>
+            <p class="small">Designed and analyzed a high-sensitivity terahertz antenna focused on optimizing gain, bandwidth, and sensitivity for biomolecular detection using electromagnetic simulation tools.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Soft Skills</h2>
+          <ul>
+            <li>Problem-solving</li>
+            <li>Teamwork</li>
+            <li>Adaptability</li>
+            <li>Leadership</li>
+          </ul>
+        </div>
+      </section>
+
+      <aside class="right-col">
+        <div class="section">
+          <h2>Certifications</h2>
+          <div class="cert-list">
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Power BI</div>
+                <div class="cert-org">Microsoft</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Cloud Computing</div>
+                <div class="cert-org">NPTEL</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Switching, Routing, and Wireless Essentials</div>
+                <div class="cert-org">Cisco</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Developer & Technology Job Simulation</div>
+                <div class="cert-org">Accenture & Forage</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Python Database Connection with MariaDB</div>
+                <div class="cert-org">Coursera</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Networking devices and initial configuration</div>
+                <div class="cert-org">Cisco</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Advanced Software Engineering Job Simulation</div>
+                <div class="cert-org">Walmart & Forage</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Introduction to Networks</div>
+                <div class="cert-org">Cisco</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">📜</span>
+              <div class="cert-details">
+                <div class="cert-name">Java Programming: Solving Problems with Software</div>
+                <div class="cert-org">Coursera</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="section">
+          <h2>Areas of Interest</h2>
+          <ul>
+            <li>Problem Solving</li>
+            <li>Achieving Coding Milestones</li>
+            <li>Continuous Learning</li>
+            <li>Collaboration on GitHub Projects</li>
+            <li>Object-Oriented Programming</li>
+          </ul>
+        </div>
+
+
+      </aside>
+    </div>
+
+    <div class="footer">
+      <div style="font-size:13px;color:var(--muted);">Contact — <a class="link" href="mailto:manojamutha1000@gmail.com">manojamutha1000@gmail.com</a> • <a class="link" href="tel:8778313763">8778313763</a></div>
+    </div>
+  </div>
+</body>
+</html>

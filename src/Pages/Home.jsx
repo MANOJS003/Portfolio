@@ -37,14 +37,14 @@ const MainTitle = memo(() => (
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-          Data
+          Junior
         </span>
       </span>
       <br />
       <span className="relative inline-block mt-2">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent">
-          Analyst
+          Developer
         </span>
       </span>
     </h1>
@@ -96,7 +96,7 @@ const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
 const WORDS = ["Electronic & Communication Student", "Tech Enthusiast"];
-const TECH_STACK = ["C", "C++", "Python", "Java","MySql"];
+const TECH_STACK = ["Python","Django","HTML", "CSS", "Bootstrap", "SQL"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/MANOJS003" },
   { icon: Linkedin, link: "https://www.linkedin.com/in/manoj-s-84a48525a/" },
@@ -219,7 +219,7 @@ const Home = () => {
                   data-aos="fade-up"
                   data-aos-delay="1000"
                 >
-                  Data analyst skilled in programming, data interpretation, and problem-solving
+                  Junior Developer skilled in programming, debugging, and building efficient solutions.
                 </p>
 
                 {/* Tech Stack */}
