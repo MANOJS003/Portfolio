@@ -116,6 +116,7 @@ const techStacks = [
   { icon: "/assets/svg/firebase.svg", language: "Firebase" },
   { icon: "/assets/svg/git-svgrepo-com.svg", language: "Git" },
   { icon: "/assets/svg/github-color-svgrepo-com.svg", language: "GitHub" },
+  {icon: "/assets/svg/bitbucket.svg", language: "Bitbucket"},
 
   // { icon: "/assets/svg/vercel.svg", language: "Vercel" },
   // { icon: "/assets/svg/SweetAlert.svg", language: "SweetAlert2" },
