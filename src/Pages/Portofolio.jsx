@@ -10,14 +10,16 @@ import Box from "@mui/material/Box";
 import CardProject from "../components/CardProject";
 import TechStackIcon from "../components/TechStackIcon";
 import AOS from "aos";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import "aos/dist/aos.css";
 import Certificate from "../components/Certificate";
-import { Code, Award, Boxes } from "lucide-react";
+import experiences from "../data/experiences.json";
+import { Code, Award, Boxes, Briefcase } from "lucide-react";
+import skills from "../data/skills.json";
 import certificatesData from "../data/certificates.json";
 import projectsData from "../data/projects.json";
 // Debug: Log the imported projects data
 console.log('Imported projectsData:', JSON.stringify(projectsData, null, 2));
-
 
 // Separate ShowMore/ShowLess button component
 const ToggleButton = ({ onClick, isShowingMore }) => (
@@ -103,29 +105,73 @@ function a11yProps(index) {
   };
 }
 
-const techStacks = [
- 
-  { icon: "/assets/svg/python.svg", language: "Python" },
-  {icon: "/assets/svg/django.svg", language: "Django"},
-  { icon: "/assets/svg/html.svg", language: "HTML" },
-  { icon: "/assets/svg/css.svg", language: "CSS" },
-  { icon: "/assets/svg/bootstrap.png", language: "Bootstrap" },
-  { icon: "/assets/svg/js.svg", language: "JavaScript" },
-  { icon: "/assets/svg/sql.svg", language: "MY SQL" },
-  {icon: "/assets/svg/mongodb.svg", language: "Mangodb"},
-  { icon: "/assets/svg/firebase.svg", language: "Firebase" },
-  { icon: "/assets/svg/git-svgrepo-com.svg", language: "Git" },
-  { icon: "/assets/svg/github-color-svgrepo-com.svg", language: "GitHub" },
-  {icon: "/assets/svg/bitbucket.svg", language: "Bitbucket"},
+// Tech stacks now sourced from JSON for easy updates
+const techStacks = skills;
 
-  // { icon: "/assets/svg/vercel.svg", language: "Vercel" },
-  // { icon: "/assets/svg/SweetAlert.svg", language: "SweetAlert2" },
-];
+// Experiences are now sourced from src/data/experiences.json so multiple pages can reuse
 
 export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [projects, setProjects] = useState([]);
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  // Map query tab names to indices
+  const tabIndexByName = {
+    projects: 0,
+    certificates: 1,
+    tech: 2,
+    experience: 3,
+  };
+  const tabNameByIndex = ['projects', 'certificates', 'tech', 'experience'];
+  // Helpers for Experience date formatting and tenure
+  const formatDate = (iso) => {
+    if (!iso) return null;
+    if (typeof iso === 'string' && iso.toLowerCase() === 'present') return null;
+    const d = new Date(iso);
+    if (isNaN(d)) return null;
+    return d.toLocaleString(undefined, { month: 'short', year: 'numeric' });
+  };
+  const calcTenure = (startISO, endISO) => {
+    if (!startISO) return null;
+    const start = new Date(startISO);
+    const end = (!endISO || (typeof endISO === 'string' && endISO.toLowerCase() === 'present'))
+      ? new Date()
+      : new Date(endISO);
+    if (isNaN(start) || isNaN(end)) return null;
+    // If start is in the future relative to end (today), show zeroed tenure
+    if (end < start) return `0 months 0 days`;
+
+    let years = end.getFullYear() - start.getFullYear();
+    let months = end.getMonth() - start.getMonth();
+    let days = end.getDate() - start.getDate();
+
+    // Adjust days
+    if (days < 0) {
+      // days in the previous month relative to `end`
+      const daysInPrevMonth = new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+      days += daysInPrevMonth;
+      months -= 1;
+    }
+
+    // Adjust months
+    if (months < 0) {
+      months += 12;
+      years -= 1;
+    }
+
+    const yLabel = years === 1 ? 'year' : 'years';
+    const mLabel = months === 1 ? 'month' : 'months';
+    const dLabel = days === 1 ? 'day' : 'days';
+
+    const parts = [];
+    if (years > 0) parts.push(`${years} ${yLabel}`);
+    // Always show months (even if 0) so the UI displays months consistently
+    parts.push(`${months} ${mLabel}`);
+    // Always show days
+    parts.push(`${days} ${dLabel}`);
+
+    return parts.join(' ');
+  };
   
   useEffect(() => {
     console.log('Initial projectsData:', projectsData);
@@ -161,10 +207,56 @@ export default function FullWidthTabs() {
     // Debug log
     console.log('Total certificates:', certificatesData.length);
     console.log('Certificates data:', certificatesData);
+    // On mount, read ?tab= from URL and set the initial tab
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = (params.get('tab') || '').toLowerCase();
+      if (tabParam && tabParam in tabIndexByName) {
+        setValue(tabIndexByName[tabParam]);
+      }
+      // Listen to back/forward nav to keep tab in sync
+      const onPop = () => {
+        const params2 = new URLSearchParams(window.location.search);
+        const tab2 = (params2.get('tab') || '').toLowerCase();
+        if (tab2 in tabIndexByName) setValue(tabIndexByName[tab2]);
+      };
+      window.addEventListener('popstate', onPop);
+
+      // Listen to custom event from About to switch tabs without reload
+      const onCustom = (e) => {
+        const tab = (e?.detail?.tab || '').toLowerCase();
+        if (tab in tabIndexByName) {
+          setValue(tabIndexByName[tab]);
+          // Keep URL updated
+          const url = new URL(window.location.href);
+          url.searchParams.set('tab', tab);
+          url.hash = 'Portofolio';
+          window.history.replaceState({}, '', url.toString());
+        }
+      };
+      window.addEventListener('portfolio-tab-change', onCustom);
+
+      return () => {
+        window.removeEventListener('popstate', onPop);
+        window.removeEventListener('portfolio-tab-change', onCustom);
+      };
+    } catch (e) {
+      // ignore if not available
+    }
   }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    // Keep URL in sync so About links scroll to the right tab
+    try {
+      const name = tabNameByIndex[newValue] || 'projects';
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', name);
+      url.hash = 'Portofolio';
+      window.history.replaceState({}, '', url.toString());
+    } catch (e) {
+      // ignore URL errors in non-browser envs
+    }
   };
 
   const toggleShowMore = (type) => {
@@ -223,49 +315,46 @@ export default function FullWidthTabs() {
           }}
           className="md:px-4"
         >
-          {/* Tabs remain unchanged */}
+          {/* Responsive, scrollable Tabs for mobile */}
           <Tabs
             value={value}
             onChange={handleChange}
             textColor="secondary"
             indicatorColor="secondary"
-            variant="fullWidth"
+            variant={isMdUp ? "fullWidth" : "scrollable"}
+            scrollButtons={isMdUp ? false : "auto"}
+            allowScrollButtonsMobile={!isMdUp}
+            aria-label="Portfolio sections"
             sx={{
-              // Existing styles remain unchanged
-              minHeight: "70px",
+              minHeight: { xs: "56px", md: "70px" },
+              overflowX: "auto",
               "& .MuiTab-root": {
-                fontSize: { xs: "0.9rem", md: "1rem" },
-                fontWeight: "600",
+                minWidth: { xs: 110, sm: 120, md: 0 },
+                fontSize: { xs: "0.85rem", md: "1rem" },
+                fontWeight: 600,
                 color: "#94a3b8",
                 textTransform: "none",
-                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                padding: "20px 0",
+                transition: "all 0.3s ease",
+                padding: { xs: "10px 6px", md: "20px 0" },
                 zIndex: 1,
-                margin: "8px",
+                margin: { xs: "4px", md: "8px" },
                 borderRadius: "12px",
                 "&:hover": {
                   color: "#ffffff",
                   backgroundColor: "rgba(139, 92, 246, 0.1)",
                   transform: "translateY(-2px)",
-                  "& .lucide": {
-                    transform: "scale(1.1) rotate(5deg)",
-                  },
+                  "& .lucide": { transform: "scale(1.1) rotate(5deg)" },
                 },
                 "&.Mui-selected": {
                   color: "#fff",
                   background: "linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2))",
                   boxShadow: "0 4px 15px -3px rgba(139, 92, 246, 0.2)",
-                  "& .lucide": {
-                    color: "#a78bfa",
-                  },
+                  "& .lucide": { color: "#a78bfa" },
                 },
               },
-              "& .MuiTabs-indicator": {
-                height: 0,
-              },
-              "& .MuiTabs-flexContainer": {
-                gap: "8px",
-              },
+              "& .MuiTabs-indicator": { height: 0 },
+              "& .MuiTabs-flexContainer": { gap: { xs: "4px", md: "8px" } },
+              "& .MuiTabs-scrollButtons.Mui-disabled": { opacity: 0.3 },
             }}
           >
             <Tab
@@ -282,6 +371,11 @@ export default function FullWidthTabs() {
               icon={<Boxes className="mb-2 w-5 h-5 transition-all duration-300" />}
               label="Tech Stack"
               {...a11yProps(2)}
+            />
+            <Tab
+              icon={<Briefcase className="mb-2 w-5 h-5 transition-all duration-300" />}
+              label="Experience"
+              {...a11yProps(3)}
             />
           </Tabs>
         </AppBar>
@@ -370,6 +464,50 @@ export default function FullWidthTabs() {
                   >
                     <TechStackIcon TechStackIcon={stack.icon} Language={stack.language} />
                   </div>
+                ))}
+              </div>
+            </div>
+          </TabPanel>
+          <TabPanel value={value} index={3} dir={theme.direction}>
+            <div className="container mx-auto flex justify-start items-start overflow-hidden pb-[5%]">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
+                {experiences.map((exp, index) => (
+                  <article
+                    key={index}
+                    data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
+                    data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
+                    className="group relative w-full h-full flex flex-col"
+                  >
+                    <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-lg border border-white/10 shadow-2xl transition-all duration-300 hover:shadow-purple-500/20 h-full flex flex-col">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+                      <div className="relative p-5 z-10 h-full flex flex-col">
+                        <div className="relative overflow-hidden rounded-lg h-64 w-full mb-4 flex items-center justify-center bg-white/5">
+                          <img src={exp.icon} alt={exp.company} className="h-full w-auto max-h-full object-contain" />
+                        </div>
+                        <div className="mt-4 space-y-3 flex-1 flex flex-col items-center text-center">
+                          <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
+                            {exp.company}
+                          </h3>
+                          <div className="text-gray-300/90 text-sm">{exp.role}</div>
+                          <div className="text-gray-400 text-xs">
+                            {formatDate(exp.joiningDate) && (
+                              <>
+                                <span>Joining: {formatDate(exp.joiningDate)}</span>
+                                <span> • </span>
+                                <span>Exit: {formatDate(exp.exitDate) || 'Present'}</span>
+                                <span> • </span>
+                                <span>Total: {calcTenure(exp.joiningDate, exp.exitDate)}</span>
+                              </>
+                            )}
+                            {!formatDate(exp.joiningDate) && exp.years && (
+                              <span>Total: {exp.years}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 border border-white/0 group-hover:border-purple-500/50 rounded-xl transition-colors duration-300 -z-50" />
+                    </div>
+                  </article>
                 ))}
               </div>
             </div>

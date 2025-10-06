@@ -12,6 +12,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import certificatesData from "../data/certificates.json";
 import projects from "../data/projects.json";
+import experiencesData from "../data/experiences.json";
 
 // Memoized Components
 const Header = memo(() => (
@@ -149,21 +150,41 @@ const StatCard = memo(
 
 const AboutPage = () => {
   // Memoized calculations
-  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
+  const { totalProjects, totalCertificates, totalExperienceCompact, totalExperienceLabel } = useMemo(() => {
     const storedProjects = projects.projects;
     const certificatesCount = certificatesData.certificates.length
 
-     const startDate = new Date();
-    const today = new Date();
-    const experience =
-      today.getFullYear() -
-      startDate.getFullYear() -
-      (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
+    // Sum all experience durations (handle Present/empty exitDate)
+    const now = new Date();
+    const totalMs = (experiencesData || []).reduce((acc, exp) => {
+      if (!exp.joiningDate) return acc;
+      const start = new Date(exp.joiningDate);
+      const end = (!exp.exitDate || (typeof exp.exitDate === 'string' && exp.exitDate.toLowerCase() === 'present'))
+        ? now
+        : new Date(exp.exitDate);
+      if (isNaN(start) || isNaN(end) || end < start) return acc;
+      return acc + (end - start);
+    }, 0);
+
+    // Convert totalMs to years, months, days (approximate but consistent)
+    const totalDays = Math.floor(totalMs / (1000 * 60 * 60 * 24));
+    const years = Math.floor(totalDays / 365);
+    const daysAfterYears = totalDays % 365;
+    const months = Math.floor(daysAfterYears / 30);
+    const days = daysAfterYears % 30;
+
+    const yLabel = years === 1 ? 'year' : 'years';
+    const mLabel = months === 1 ? 'month' : 'months';
+    const dLabel = days === 1 ? 'day' : 'days';
+
+    const compact = `${years}y ${months}m ${days}d`;
+    const label = `${years} ${yLabel} ${months} ${mLabel} ${days} ${dLabel}`;
 
     return {
       totalProjects: storedProjects.length,
       totalCertificates: certificatesCount,
-      YearExperience: experience,
+      totalExperienceCompact: compact,
+      totalExperienceLabel: label,
     };
   }, []);
 
@@ -201,6 +222,7 @@ const AboutPage = () => {
         label: "Total Projects",
         description: "Innovative web solutions crafted",
         animation: "fade-right",
+        tab: "projects",
       },
       {
         icon: Award,
@@ -209,18 +231,35 @@ const AboutPage = () => {
         label: "Certificates",
         description: "Professional skills validated",
         animation: "fade-up",
+        tab: "certificates",
       },
       {
         icon: Globe,
         color: "from-[#6366f1] to-[#a855f7]",
-        value: YearExperience,
-        label: "Years of Experience",
-        description: "Continuous learning journey",
+        value: totalExperienceCompact,
+        label: "Total Experience",
+        description: totalExperienceLabel,
         animation: "fade-left",
+        tab: "experience",
       },
     ],
-    [totalProjects, totalCertificates, YearExperience]
+    [totalProjects, totalCertificates, totalExperienceCompact, totalExperienceLabel]
   );
+
+  const handleStatClick = (e, tab) => {
+    e.preventDefault();
+    try {
+      // Update URL without reloading
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', tab);
+      window.history.replaceState({}, '', url.toString());
+      // Notify Portfolio to switch tab (no reload)
+      window.dispatchEvent(new CustomEvent('portfolio-tab-change', { detail: { tab } }));
+      // Smooth scroll to Portfolio section
+      const el = document.getElementById('Portofolio');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (_) {}
+  };
 
   return (
     <div
@@ -289,13 +328,18 @@ const AboutPage = () => {
           <ProfileImage />
         </div>
 
-        <a href="#Portofolio">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 cursor-pointer">
-            {statsData.map((stat) => (
-              <StatCard key={stat.label} {...stat} />
-            ))}
-          </div>
-        </a>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+          {statsData.map((stat) => (
+            <a
+              key={stat.label}
+              href="#Portofolio"
+              onClick={(e) => handleStatClick(e, stat.tab)}
+              className="block cursor-pointer"
+            >
+              <StatCard {...stat} />
+            </a>
+          ))}
+        </div>
       </div>
 
       <style dangerouslySetInnerHTML={{
