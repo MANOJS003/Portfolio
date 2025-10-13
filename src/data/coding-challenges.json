@@ -1,0 +1,17 @@
+{
+  "codingChallenges": [
+    {
+      "id": 1,
+      "title": "LeetCode Problems Solved",
+      "description": "Solved 544 problems on LeetCode, including Easy, Medium, and Hard difficulties.",
+      "icon": "/assets/Coding/ProblemCount.png",
+      "stats": {
+        "easy": 343,
+        "medium": 195,
+        "hard": 6,
+        "total": 544
+      },
+      "link": "https://leetcode.com/u/Manoj_S115/"
+    }
+  ]
+}

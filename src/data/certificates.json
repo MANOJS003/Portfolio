@@ -38,7 +38,10 @@
     },
     {
       "id": 10,
-      "ImgSertif": "/assets/certificate_images/crt6.jpg"
+      "ImgSertif": "/assets/certificate_images/crt11.jpg"
+    },{
+      "id": 11,
+      "ImgSertif": "/assets/certificate_images/crt6.jpg"   
     }
   ]
 }

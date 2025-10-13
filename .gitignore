@@ -20,3 +20,8 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
+
+# Build outputs and temporary files
+dist/
+temp-project/
+scripts/

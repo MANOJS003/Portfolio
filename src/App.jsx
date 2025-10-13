@@ -6,6 +6,7 @@ import About from "./Pages/About";
 import AnimatedBackground from "./components/Background";
 import Navbar from "./components/Navbar";
 import Portofolio from "./Pages/Portofolio";
+import Achievement from "./Pages/Achievement";
 import ContactPage from "./Pages/Contact";
 import WelcomeScreen from "./Pages/WelcomeScreen";
 import Testing from "./Pages/testing";
@@ -40,15 +41,15 @@ function App() {
   // Add scroll event listener for auto-scrolling between sections
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'portfolio', 'contact'];
+      const sections = ['home', 'about', 'portfolio', 'achievement', 'contact'];
       const scrollPosition = window.scrollY + 100;
-      
+
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetHeight = element.offsetHeight;
-          
+
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             window.history.pushState({}, '', `#${section}`);
             break;
@@ -56,7 +57,7 @@ function App() {
         }
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -81,6 +82,7 @@ function App() {
                   <div id="home"><Home /></div>
                   <div id="about"><About /></div>
                   <div id="portfolio"><Portofolio /></div>
+                  <div id="achievement"><Achievement /></div>
                   <div id="contact"><ContactPage /></div>
                 </>
               } />
