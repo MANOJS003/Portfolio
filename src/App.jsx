@@ -34,7 +34,12 @@ function App() {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const navbarHeight = 80; // Approximate navbar height including padding
+      const elementPosition = element.offsetTop - navbarHeight;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
     }
   };
   
@@ -111,5 +116,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;
