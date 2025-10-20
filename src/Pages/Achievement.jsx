@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
@@ -187,93 +186,79 @@ export default function Achievement() {
           </Tabs>
         </AppBar>
 
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={(index) => setValue(index)}
-          enableMouseEvents
-          resistance
-          slideStyle={{
-            padding: '0 10px',
-            boxSizing: 'border-box',
-            overflow: 'visible'
-          }}
-          containerStyle={{
-            transition: 'transform 0.5s cubic-bezier(0.15, 0.4, 0.6, 0.85)'
-          }}
-        >
-          {categories.map((category, index) => (
-            <TabPanel key={index} value={value} index={index} dir={theme.direction}>
-              <div className="container mx-auto flex justify-center items-center overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {filteredAchievements.map((achievement, achIndex) => (
-                    <div
-                      key={achievement.id}
-                      data-aos={achIndex % 3 === 0 ? "fade-up-right" : achIndex % 3 === 1 ? "fade-up" : "fade-up-left"}
-                      data-aos-duration={achIndex % 3 === 0 ? "1000" : achIndex % 3 === 1 ? "1200" : "1000"}
-                    >
-                      <article className="group relative w-full h-full flex flex-col">
-                        <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-lg border border-white/10 shadow-2xl transition-all duration-300 hover:shadow-purple-500/20 h-full flex flex-col">
-                          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
-                          <div className="relative z-10 h-full flex flex-col">
-                            {achievement.ImgSertif ? (
-                              // Full certificate image covering the entire card
-                              <div className="relative overflow-hidden rounded-xl h-full w-full flex items-center justify-center">
-                                <img 
-                                  src={achievement.ImgSertif} 
-                                  alt={`Certificate ${achievement.id}`}
-                                  className="h-full w-full object-cover" 
-                                />
+        {/* Tab Content */}
+        {categories.map((category, index) => (
+          <TabPanel key={index} value={value} index={index} dir={theme.direction}>
+            <div className="container mx-auto flex justify-center items-center overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredAchievements.map((achievement, achIndex) => (
+                  <div
+                    key={achievement.id}
+                    data-aos={achIndex % 3 === 0 ? "fade-up-right" : achIndex % 3 === 1 ? "fade-up" : "fade-up-left"}
+                    data-aos-duration={achIndex % 3 === 0 ? "1000" : achIndex % 3 === 1 ? "1200" : "1000"}
+                  >
+                    <article className="group relative w-full h-full flex flex-col">
+                      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-lg border border-white/10 shadow-2xl transition-all duration-300 hover:shadow-purple-500/20 h-full flex flex-col">
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+                        <div className="relative z-10 h-full flex flex-col">
+                          {achievement.ImgSertif ? (
+                            // Full certificate image covering the entire card
+                            <div className="relative overflow-hidden rounded-xl h-full w-full flex items-center justify-center">
+                              <img 
+                                src={achievement.ImgSertif} 
+                                alt={`Certificate ${achievement.id}`}
+                                className="h-full w-full object-cover" 
+                                onError={(e) => { console.error('Failed to load certificate image:', e.target.src); e.target.style.display = 'none'; }}
+                              />
+                            </div>
+                          ) : (
+                            // Standard achievement card
+                            <>
+                              <div className="relative overflow-hidden rounded-lg h-32 w-full mb-4 flex items-center justify-center bg-white/5 p-5">
+                                <img src={achievement.icon} alt={achievement.title} className="h-full w-auto max-h-full object-contain" onError={(e) => { console.error('Failed to load image:', e.target.src); e.target.style.display = 'none'; }} />
                               </div>
-                            ) : (
-                              // Standard achievement card
-                              <>
-                                <div className="relative overflow-hidden rounded-lg h-32 w-full mb-4 flex items-center justify-center bg-white/5 p-5">
-                                  <img src={achievement.icon} alt={achievement.title} className="h-full w-auto max-h-full object-contain" />
+                              <div className="p-5 flex-1 flex flex-col items-center text-center">
+                                <div className="mt-4 space-y-3 flex-1 flex flex-col items-center text-center">
+                                  <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
+                                    {achievement.title}
+                                  </h3>
+                                  <p className="text-gray-300/90 text-sm">{achievement.description}</p>
+                                  {achievement.stats && (
+                                    <div className="text-gray-400 text-xs">
+                                      {Object.entries(achievement.stats).map(([key, value]) => (
+                                        <span key={key}>{key}: {value} </span>
+                                      ))}
+                                    </div>
+                                  )}
+                                  {achievement.badges && (
+                                    <div className="text-gray-400 text-xs">
+                                      Badges: {achievement.badges.join(', ')}
+                                    </div>
+                                  )}
+                                  {achievement.link && (
+                                    <a
+                                      href={achievement.link}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="mt-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors"
+                                    >
+                                      View on LeetCode
+                                    </a>
+                                  )}
                                 </div>
-                                <div className="p-5 flex-1 flex flex-col items-center text-center">
-                                  <div className="mt-4 space-y-3 flex-1 flex flex-col items-center text-center">
-                                    <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
-                                      {achievement.title}
-                                    </h3>
-                                    <p className="text-gray-300/90 text-sm">{achievement.description}</p>
-                                    {achievement.stats && (
-                                      <div className="text-gray-400 text-xs">
-                                        {Object.entries(achievement.stats).map(([key, value]) => (
-                                          <span key={key}>{key}: {value} </span>
-                                        ))}
-                                      </div>
-                                    )}
-                                    {achievement.badges && (
-                                      <div className="text-gray-400 text-xs">
-                                        Badges: {achievement.badges.join(', ')}
-                                      </div>
-                                    )}
-                                    {achievement.link && (
-                                      <a
-                                        href={achievement.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="mt-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors"
-                                      >
-                                        View on LeetCode
-                                      </a>
-                                    )}
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                          <div className="absolute inset-0 border border-white/0 group-hover:border-purple-500/50 rounded-xl transition-colors duration-300 -z-50" />
+                              </div>
+                            </>
+                          )}
                         </div>
-                      </article>
-                    </div>
-                  ))}
-                </div>
+                        <div className="absolute inset-0 border border-white/0 group-hover:border-purple-500/50 rounded-xl transition-colors duration-300 -z-50" />
+                      </div>
+                    </article>
+                  </div>
+                ))}
               </div>
-            </TabPanel>
-          ))}
-        </SwipeableViews>
+            </div>
+          </TabPanel>
+        ))}
       </Box>
     </div>
   );

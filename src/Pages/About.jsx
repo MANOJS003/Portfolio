@@ -256,7 +256,7 @@ const AboutPage = () => {
       // Notify Portfolio to switch tab (no reload)
       window.dispatchEvent(new CustomEvent('portfolio-tab-change', { detail: { tab } }));
       // Smooth scroll to Portfolio section
-      const el = document.getElementById('Portofolio');
+      const el = document.getElementById('Portfolio');
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (_) {}
   };
@@ -313,7 +313,7 @@ const AboutPage = () => {
                 </button>
               </a>
 
-              <a href="#Portofolio" className="w-full lg:w-auto" onClick={(e) => handleStatClick(e, 'tech')}>
+              <a href="#Portfolio" className="w-full lg:w-auto" onClick={(e) => handleStatClick(e, 'tech')}>
                 <button
                   data-aos="fade-up"
                   data-aos-duration="1000"
@@ -332,7 +332,7 @@ const AboutPage = () => {
           {statsData.map((stat) => (
             <a
               key={stat.label}
-              href="#Portofolio"
+              href="#Portfolio"
               onClick={(e) => handleStatClick(e, stat.tab)}
               className="block cursor-pointer"
             >

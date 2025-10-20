@@ -5,7 +5,7 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import AnimatedBackground from "./components/Background";
 import Navbar from "./components/Navbar";
-import Portofolio from "./Pages/Portofolio";
+import Portfolio from "./Pages/Portfolio";
 import Achievement from "./Pages/Achievement";
 import ContactPage from "./Pages/Contact";
 import WelcomeScreen from "./Pages/WelcomeScreen";
@@ -63,7 +63,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="min-h-screen w-full bg-[#030014] overflow-auto">
         <ScrollToTop />
         <AnimatePresence mode="wait">
@@ -81,7 +81,7 @@ function App() {
                 <>
                   <div id="home"><Home /></div>
                   <div id="about"><About /></div>
-                  <div id="portfolio"><Portofolio /></div>
+                  <div id="portfolio"><Portfolio /></div>
                   <div id="achievement"><Achievement /></div>
                   <div id="contact"><ContactPage /></div>
                 </>

@@ -8,7 +8,6 @@ import {
   Sparkles,
   Code2,
 } from "lucide-react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -135,14 +134,14 @@ const Home = () => {
   const handleTyping = useCallback(() => {
     if (isTyping) {
       if (charIndex < WORDS[wordIndex].length) {
-        setText((prev) => prev + WORDS[wordIndex][charIndex]);
+        setText(WORDS[wordIndex].substring(0, charIndex + 1));
         setCharIndex((prev) => prev + 1);
       } else {
         setTimeout(() => setIsTyping(false), PAUSE_DURATION);
       }
     } else {
       if (charIndex > 0) {
-        setText((prev) => prev.slice(0, -1));
+        setText(WORDS[wordIndex].substring(0, charIndex - 1));
         setCharIndex((prev) => prev - 1);
       } else {
         setWordIndex((prev) => (prev + 1) % WORDS.length);
@@ -152,6 +151,13 @@ const Home = () => {
   }, [charIndex, isTyping, wordIndex]);
 
   useEffect(() => {
+    if (charIndex === 0 && isTyping) {
+      const timeout = setTimeout(handleTyping, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [charIndex, isTyping, handleTyping]);
+
+  useEffect(() => {
     const timeout = setTimeout(
       handleTyping,
       isTyping ? TYPING_SPEED : ERASING_SPEED
@@ -159,28 +165,20 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, [handleTyping]);
 
-  // Lottie configuration
-  const lottieOptions = {
-    src: "https://lottie.host/58753882-bb6a-49f5-a2c0-950eda1e135a/NLbpVqGegK.lottie",
-    loop: true,
-    autoplay: true,
-    style: { 
-      width: "100%", 
-      height: "100%" 
-    },
-    className: `w-full h-full transition-all duration-500 ${
-      isHovering
-        ? "scale-[180%] sm:scale-[160%] md:scale-[150%] lg:scale-[145%] rotate-2"
-        : "scale-[175%] sm:scale-[155%] md:scale-[145%] lg:scale-[140%]"
-    }`,
-    config: {
-      renderer: 'svg',
-      rendererSettings: {
-        preserveAspectRatio: "xMidYMid slice",
-        progressiveLoad: true,
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const viewer = document.querySelector('spline-viewer');
+      if (viewer && viewer.shadowRoot) {
+        const logo = viewer.shadowRoot.querySelector('#logo');
+        if (logo) {
+          logo.remove(); // Removes the logo element
+          clearInterval(interval); // Stops the script from running repeatedly
+        }
       }
-    }
-  };
+    }, 100); // Checks every 100 milliseconds
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#030014] overflow-hidden" id="Home">
@@ -207,7 +205,10 @@ const Home = () => {
                   data-aos="fade-up"
                   data-aos-delay="800"
                 >
-                  <span className="text-xl md:text-2xl bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent font-light">
+                  <span
+                    key={text}
+                    className="text-xl md:text-2xl bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent font-light"
+                  >
                     {text}
                   </span>
                   <span className="w-[3px] h-6 bg-gradient-to-t from-[#6366f1] to-[#a855f7] ml-1 animate-blink"></span>
@@ -240,7 +241,7 @@ const Home = () => {
                   data-aos-delay="1400"
                 >
                   <CTAButton
-                    href="#Portofolio"
+                    href="#Portfolio"
                     text="Projects"
                     icon={ExternalLink}
                   />
@@ -260,9 +261,9 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right Column - Optimized Lottie Animation */}
+            {/* Right Column - Spline 3D Viewer */}
             <div
-              className="w-full py-[10%] sm:py-0 lg:w-1/2 h-auto lg:h-[600px] xl:h-[750px] relative flex items-center justify-center order-2 lg:order-2 mt-8 lg:mt-0"
+              className="w-full py-[10%] sm:py-0 lg:w-1/2 h-auto lg:h-[1400px] xl:h-[1600px] relative flex items-center justify-center order-2 lg:order-2 mt-8 lg:mt-0"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
               data-aos="fade-left"
@@ -279,8 +280,9 @@ const Home = () => {
                   className={`relative z-10 w-full opacity-90 transform transition-transform duration-500 ${
                     isHovering ? "scale-105" : "scale-100"
                   }`}
+                  style={{ transform: 'translateX(-29%)' }}
                 >
-                  <DotLottieReact {...lottieOptions} />
+                  <spline-viewer url="https://prod.spline.design/3EznCcHebyMht9A1/scene.splinecode" style={{ width: '150%' }} onError={(e) => console.warn('Spline viewer error:', e)}></spline-viewer>
                 </div>
 
                 <div

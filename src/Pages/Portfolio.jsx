@@ -218,7 +218,7 @@ export default function FullWidthTabs() {
           // Keep URL updated
           const url = new URL(window.location.href);
           url.searchParams.set('tab', tab);
-          url.hash = 'Portofolio';
+          url.hash = 'Portfolio';
           window.history.replaceState({}, '', url.toString());
         }
       };
@@ -240,7 +240,7 @@ export default function FullWidthTabs() {
       const name = tabNameByIndex[newValue] || 'projects';
       const url = new URL(window.location.href);
       url.searchParams.set('tab', name);
-      url.hash = 'Portofolio';
+      url.hash = 'Portfolio';
       window.history.replaceState({}, '', url.toString());
     } catch (e) {
       // ignore URL errors in non-browser envs
@@ -258,7 +258,7 @@ export default function FullWidthTabs() {
   const displayedProjects = showAllProjects ? projects : projects.slice(0, initialProjects);
 
   return (
-    <div className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[#030014] overflow-hidden" id="Portofolio">
+    <div className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[#030014] overflow-hidden" id="Portfolio">
       {/* Header section - unchanged */}
       <div className="text-center pb-10" data-aos="fade-up" data-aos-duration="1000">
         <h2 className="inline-block text-3xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
