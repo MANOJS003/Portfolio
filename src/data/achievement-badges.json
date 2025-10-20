@@ -1,7 +1,7 @@
 {
   "achievementBadges": [
     {
-      "id": 1,
+      "id": 4,
       "title": "50 Days Coding Streak",
       "description": "Maintained a 50-day coding streak on LeetCode, demonstrating consistent problem-solving dedication.",
       "icon": "/assets/Coding/50 days.gif",
@@ -11,7 +11,7 @@
       "link": "https://leetcode.com/u/Manoj_S115/"
     },
     {
-      "id": 2,
+      "id": 5,
       "title": "100 Days Coding Streak",
       "description": "Achieved a remarkable 100-day coding streak on LeetCode, showcasing exceptional commitment to daily practice.",
       "icon": "/assets/Coding/100 days.gif",

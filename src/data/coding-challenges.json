@@ -1,7 +1,7 @@
 {
   "codingChallenges": [
     {
-      "id": 1,
+      "id": 3,
       "title": "LeetCode Problems Solved",
       "description": "Solved 544 problems on LeetCode, including Easy, Medium, and Hard difficulties.",
       "icon": "/assets/Coding/ProblemCount.png",

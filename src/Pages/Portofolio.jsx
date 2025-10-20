@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -18,8 +18,6 @@ import { Code, Award, Boxes, Briefcase } from "lucide-react";
 import skills from "../data/skills.json";
 import certificatesData from "../data/certificates.json";
 import projectsData from "../data/projects.json";
-// Debug: Log the imported projects data
-console.log('Imported projectsData:', JSON.stringify(projectsData, null, 2));
 
 // Separate ShowMore/ShowLess button component
 const ToggleButton = ({ onClick, isShowingMore }) => (
@@ -173,26 +171,19 @@ export default function FullWidthTabs() {
     return parts.join(' ');
   };
   
-  useEffect(() => {
-    console.log('Initial projectsData:', projectsData);
+  const projectsWithIds = useMemo(() => {
     if (projectsData && projectsData.projects) {
-      // Log each project with its ID
-      projectsData.projects.forEach((proj, idx) => {
-        console.log(`Project ${idx}:`, { id: proj.id, title: proj.Title, hasId: !!proj.id });
-      });
-      
-      // Ensure all projects have IDs
-      const projectsWithIds = projectsData.projects.map((proj, idx) => ({
+      return projectsData.projects.map((proj, idx) => ({
         ...proj,
         id: proj.id || `project-${idx}` // Ensure every project has an ID
       }));
-      
-      console.log('Projects with IDs:', projectsWithIds);
-      setProjects(projectsWithIds);
-    } else {
-      console.error('No projects data found in projectsData:', projectsData);
     }
+    return [];
   }, []);
+
+  useEffect(() => {
+    setProjects(projectsWithIds);
+  }, [projectsWithIds]);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
   const isMobile = window.innerWidth < 768;
@@ -204,9 +195,6 @@ export default function FullWidthTabs() {
     AOS.init({
       once: false,
     });
-    // Debug log
-    console.log('Total certificates:', certificatesData.length);
-    console.log('Certificates data:', certificatesData);
     // On mount, read ?tab= from URL and set the initial tab
     try {
       const params = new URLSearchParams(window.location.search);
@@ -398,26 +386,23 @@ export default function FullWidthTabs() {
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
-                {displayedProjects && displayedProjects.map((project, index) => {
-                  console.log('Rendering project:', { index, id: project.id, hasId: !!project.id });
-                  return (
-                    <div
-                      key={project.id || index}
-                      data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
-                      data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
-                    >
-                      <CardProject
-                        Img={project.Img}
-                        Title={project.Title}
-                        Description={project.Description}
-                        Link={project.Link}
-                        id={project.id?.toString()} // Ensure ID is a string
-                        isEighthProject={project.id === 8 || project.id === "8"} // Show Live Demo button only for the 8th project
-                        LiveDemo={project.LiveDemo} // Pass the LiveDemo URL
-                      />
-                    </div>
-                  );
-                })}
+                {displayedProjects && displayedProjects.map((project, index) => (
+                  <div
+                    key={project.id || index}
+                    data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
+                    data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
+                  >
+                    <CardProject
+                      Img={project.Img}
+                      Title={project.Title}
+                      Description={project.Description}
+                      Link={project.Link}
+                      id={project.id?.toString()} // Ensure ID is a string
+                      isEighthProject={project.id === 8 || project.id === "8"} // Show Live Demo button only for the 8th project
+                      LiveDemo={project.LiveDemo} // Pass the LiveDemo URL
+                    />
+                  </div>
+                ))}
               </div>
             </div>
             {projects.length > initialItems && (
