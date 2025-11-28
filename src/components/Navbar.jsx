@@ -11,7 +11,7 @@ const Navbar = ({ scrollToSection }) => {
     // Update active section based on scroll position
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ['home', 'about', 'portfolio', 'contact'];
+            const sections = ['home', 'about', 'portfolio', 'achievement', 'contact'];
             const scrollPosition = window.scrollY + 100;
             
             for (const section of sections) {
@@ -41,6 +41,7 @@ const Navbar = ({ scrollToSection }) => {
         { id: "home", label: "Home" },
         { id: "about", label: "About" },
         { id: "portfolio", label: "Portfolio" },
+        { id: "achievement", label: "Achievements" },
         { id: "contact", label: "Contact" },
     ];
 

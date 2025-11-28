@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 
-const CardProject = ({ Img, Title, Description, Link: ProjectLink, id, isEighthProject, LiveDemo }) => {
+const CardProject = ({ Img, Title, Description, Link: ProjectLink, id, isFifthProject, LiveDemo }) => {
   const handleDetails = (e) => {
     if (!id) {
       console.log("Project ID is missing");
@@ -59,7 +59,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id, isEighthP
                 <span className="text-gray-500 text-sm">Details Not Available</span>
               )}
               
-              {isEighthProject && LiveDemo && (
+              {isFifthProject && LiveDemo && (
                 <a
                   href={LiveDemo}
                   target="_blank"

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
@@ -368,21 +367,8 @@ export default function FullWidthTabs() {
           </Tabs>
         </AppBar>
 
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={(index) => setValue(index)}
-          enableMouseEvents
-          resistance
-          slideStyle={{
-            padding: '0 10px',
-            boxSizing: 'border-box',
-            overflow: 'visible'
-          }}
-          containerStyle={{
-            transition: 'transform 0.5s cubic-bezier(0.15, 0.4, 0.6, 0.85)'
-          }}
-        >
+        {/* Tab Panels */}
+        {value === 0 && (
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
@@ -397,9 +383,9 @@ export default function FullWidthTabs() {
                       Title={project.Title}
                       Description={project.Description}
                       Link={project.Link}
-                      id={project.id?.toString()} // Ensure ID is a string
-                      isEighthProject={project.id === 8 || project.id === "8"} // Show Live Demo button only for the 8th project
-                      LiveDemo={project.LiveDemo} // Pass the LiveDemo URL
+                      id={project.id?.toString()}
+                      isFifthProject={project.id === 5 || project.id === "5"}
+                      LiveDemo={project.LiveDemo}
                     />
                   </div>
                 ))}
@@ -414,6 +400,8 @@ export default function FullWidthTabs() {
               </div>
             )}
           </TabPanel>
+        )}
+        {value === 1 && (
           <TabPanel value={value} index={1} dir={theme.direction}>
             <div className="container mx-auto flex flex-col justify-center items-center overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 gap-4">
@@ -437,7 +425,8 @@ export default function FullWidthTabs() {
               </div>
             )}
           </TabPanel>
-
+        )}
+        {value === 2 && (
           <TabPanel value={value} index={2} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%]">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-8 gap-5">
@@ -453,6 +442,8 @@ export default function FullWidthTabs() {
               </div>
             </div>
           </TabPanel>
+        )}
+        {value === 3 && (
           <TabPanel value={value} index={3} dir={theme.direction}>
             <div className="container mx-auto flex justify-start items-start overflow-hidden pb-[5%]">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
@@ -497,7 +488,7 @@ export default function FullWidthTabs() {
               </div>
             </div>
           </TabPanel>
-        </SwipeableViews>
+        )}
       </Box>
     </div>
   );

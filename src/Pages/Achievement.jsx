@@ -197,17 +197,17 @@ export default function Achievement() {
                     data-aos={achIndex % 3 === 0 ? "fade-up-right" : achIndex % 3 === 1 ? "fade-up" : "fade-up-left"}
                     data-aos-duration={achIndex % 3 === 0 ? "1000" : achIndex % 3 === 1 ? "1200" : "1000"}
                   >
-                    <article className="group relative w-full h-full flex flex-col">
+                    <article className="group relative w-full h-full flex flex-col min-h-[400px]">
                       <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-lg border border-white/10 shadow-2xl transition-all duration-300 hover:shadow-purple-500/20 h-full flex flex-col">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
                         <div className="relative z-10 h-full flex flex-col">
                           {achievement.ImgSertif ? (
                             // Full certificate image covering the entire card
                             <div className="relative overflow-hidden rounded-xl h-full w-full flex items-center justify-center">
-                              <img 
-                                src={achievement.ImgSertif} 
+                              <img
+                                src={achievement.ImgSertif}
                                 alt={`Certificate ${achievement.id}`}
-                                className="h-full w-full object-cover" 
+                                className="h-full w-full object-cover"
                                 onError={(e) => { console.error('Failed to load certificate image:', e.target.src); e.target.style.display = 'none'; }}
                               />
                             </div>
@@ -217,35 +217,39 @@ export default function Achievement() {
                               <div className="relative overflow-hidden rounded-lg h-32 w-full mb-4 flex items-center justify-center bg-white/5 p-5">
                                 <img src={achievement.icon} alt={achievement.title} className="h-full w-auto max-h-full object-contain" onError={(e) => { console.error('Failed to load image:', e.target.src); e.target.style.display = 'none'; }} />
                               </div>
-                              <div className="p-5 flex-1 flex flex-col items-center text-center">
-                                <div className="mt-4 space-y-3 flex-1 flex flex-col items-center text-center">
+                              <div className="p-5 flex-1 flex flex-col justify-between">
+                                <div className="space-y-3 flex flex-col items-center text-center">
                                   <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
                                     {achievement.title}
                                   </h3>
                                   <p className="text-gray-300/90 text-sm">{achievement.description}</p>
-                                  {achievement.stats && (
-                                    <div className="text-gray-400 text-xs">
-                                      {Object.entries(achievement.stats).map(([key, value]) => (
-                                        <span key={key}>{key}: {value} </span>
-                                      ))}
-                                    </div>
-                                  )}
-                                  {achievement.badges && (
-                                    <div className="text-gray-400 text-xs">
-                                      Badges: {achievement.badges.join(', ')}
-                                    </div>
-                                  )}
-                                  {achievement.link && (
+                                  <div className="space-y-2">
+                                    {achievement.stats && (
+                                      <div className="text-gray-400 text-xs text-left">
+                                        {Object.entries(achievement.stats).map(([key, value]) => (
+                                          <span key={key}>{key}: {value} </span>
+                                        ))}
+                                      </div>
+                                    )}
+                                    {achievement.badges && (
+                                      <div className="text-gray-400 text-xs text-left">
+                                        Badges: {achievement.badges.join(', ')}
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                {achievement.link && (
+                                  <div className="mt-auto flex justify-center">
                                     <a
                                       href={achievement.link}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      className="mt-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors"
+                                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors"
                                     >
                                       View on LeetCode
                                     </a>
-                                  )}
-                                </div>
+                                  </div>
+                                )}
                               </div>
                             </>
                           )}
@@ -262,4 +266,4 @@ export default function Achievement() {
       </Box>
     </div>
   );
-}
+};

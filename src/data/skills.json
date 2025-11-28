@@ -4,13 +4,12 @@
   { "icon": "/assets/svg/css.svg", "language": "CSS" },
   { "icon": "/assets/svg/bootstrap.png", "language": "Bootstrap" },
   { "icon": "/assets/svg/js.svg", "language": "JavaScript" },
+  { "icon": "/assets/svg/jquery.svg", "language": "JQuery" },
+  { "icon":"/assets/svg/java.svg", "language": "Java"},
   { "icon": "/assets/svg/python.svg", "language": "Python" },
   { "icon": "/assets/svg/django.svg", "language": "Django" },
-  { "icon": "/assets/svg/sql.svg", "language": "MY SQL" },
+  { "icon": "/assets/svg/sql.svg", "language": "MYSQL" },
   { "icon": "/assets/svg/mongodb.svg", "language": "Mangodb" },
-  { "icon": "/assets/svg/firebase.svg", "language": "Firebase" },
-  { "icon": "/assets/svg/git-svgrepo-com.svg", "language": "Git" },
-  { "icon": "/assets/svg/github-color-svgrepo-com.svg", "language": "GitHub" },
-  { "icon": "/assets/svg/bitbucket.svg", "language": "Bitbucket" },
-  { "icon": "/assets/svg/vscode.svg", "language": "VSCode" }
+  { "icon": "/assets/svg/postgresql.svg", "language": "PostgreSQL" },
+  { "icon": "/assets/svg/nginx.svg", "language": "Nginx" }
 ]

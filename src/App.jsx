@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import "./index.css";
 import Home from "./Pages/Home";
@@ -9,7 +9,7 @@ import Portfolio from "./Pages/Portfolio";
 import Achievement from "./Pages/Achievement";
 import ContactPage from "./Pages/Contact";
 import WelcomeScreen from "./Pages/WelcomeScreen";
-import Testing from "./Pages/testing";
+
 import ProjectDetails from "./Pages/ProjectDetails";
 import { AnimatePresence } from 'framer-motion';
 
@@ -96,7 +96,6 @@ function App() {
                   <ProjectDetails />
                 </div>
               } />
-              <Route path="/testing" element={<Testing />} />
             </Routes>
             <footer>
               <center>

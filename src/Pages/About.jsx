@@ -293,8 +293,7 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-            Manoj is an enthusiastic ECE student passionate about technology, coding, and problem-solving. Skilled in Python and programming languages, I'm a strong interest in Data Structures and Algorithms and actively sharpens his skills on platforms like LeetCode, driven by a love for continuous learning and innovation.
-
+I’m an enthusiastic ECE student passionate about technology, coding, and problem-solving. I enjoy working with various programming languages, and I’ve developed a strong interest in Data Structures and Algorithms. I actively sharpen my skills on platforms like LeetCode, driven by my love for continuous learning and innovation. I also love exploring real-world problems and building practical solutions that can create a meaningful impact.
 
             </p>
 

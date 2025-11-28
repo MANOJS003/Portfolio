@@ -18,7 +18,7 @@ const StatusBadge = memo(() => (
     data-aos="zoom-in"
     data-aos-delay="400"
   >
-    <div className="relative group">
+    <div className="relative group mt-16">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
       <div className="relative px-3 sm:px-4 py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/10">
         <span className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-transparent bg-clip-text sm:text-sm text-[0.7rem] font-medium flex items-center">
@@ -36,7 +36,7 @@ const MainTitle = memo(() => (
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-          Junior
+          Full Stack
         </span>
       </span>
       <br />
@@ -95,7 +95,7 @@ const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
 const WORDS = ["Electronic & Communication Student", "Tech Enthusiast"];
-const TECH_STACK = ["Python","Django","HTML", "CSS", "Bootstrap", "SQL"];
+const TECH_STACK = ["Python", "Java", "HTML", "CSS", "Bootstrap", "JavaScript", "MySQL","Nginx"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/MANOJS003" },
   { icon: Linkedin, link: "https://www.linkedin.com/in/manoj-s-84a48525a/" },
@@ -282,7 +282,19 @@ const Home = () => {
                   }`}
                   style={{ transform: 'translateX(-29%)' }}
                 >
-                  <spline-viewer url="https://prod.spline.design/3EznCcHebyMht9A1/scene.splinecode" style={{ width: '150%' }} onError={(e) => console.warn('Spline viewer error:', e)}></spline-viewer>
+                  <spline-viewer
+                    url="https://prod.spline.design/3EznCcHebyMht9A1/scene.splinecode"
+                    style={{ width: '150%' }}
+                    onError={(e) => {
+                      if (e instanceof Error) {
+                        console.error('Spline viewer error:', e.message);
+                        console.error('Error details:', e);
+                      } else {
+                        console.warn('Spline viewer error:', e);
+                      }
+                    }}
+                    onLoad={() => console.log('Spline scene loaded successfully')}
+                  ></spline-viewer>
                 </div>
 
                 <div
